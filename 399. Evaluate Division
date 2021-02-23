@@ -1,0 +1,41 @@
+class Solution:
+    def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+        
+        def evaluate(query, visited):
+            
+            x, y = query[0], query[1]
+            
+            for i in range(len(equations)):
+                if x == equations[i][0] and y == equations[i][1]:
+                    return values[i]
+                elif x == equations[i][1] and y == equations[i][0]:
+                    return 1.0/values[i]
+                elif i not in visited and x == equations[i][0]:
+                    visited.add(i)
+                    t = values[i] * evaluate([equations[i][1], y], visited)
+                    if t > 0:
+                        return t
+                    visited.remove(i)
+                elif i not in visited and x == equations[i][1]:
+                    visited.add(i)
+                    t = 1.0 / (evaluate([y, equations[i][0]], visited) * values[i])
+                    if t > 0:
+                        return t
+                    visited.remove(i)
+                    
+            return -1.0
+        
+        nodes = set()
+        
+        for x, y in equations:
+            nodes.add(x)
+            nodes.add(y)
+            
+        res = [-1.0] * len(queries)
+            
+        for i, query in enumerate(queries):
+            if query[0] in nodes and query[1] in nodes:
+                visited = set()
+                res[i] = evaluate(query, visited)
+        
+        return res
