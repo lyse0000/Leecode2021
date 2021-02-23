@@ -1,0 +1,18 @@
+class Solution:
+    def countArrangement(self, n: int) -> int:
+        self.count = 0
+        def helper(i, unvisited):
+            # base case
+            if i == n:
+                lastNum = unvisited.pop()
+                if lastNum%i==0 or i%lastNum==0:
+                    self.count+=1
+                return
+            
+            for un in unvisited:
+                if un%i == 0 or i%un == 0:
+                    helper(i+1, unvisited - {un})
+                
+                
+        helper(1, set(range(1,n+1)))
+        return self.count
