@@ -1,0 +1,19 @@
+class Solution(object):
+    def partition(self, s):
+        """
+        :type s: str
+        :rtype: List[List[str]]
+        """
+        ret = []
+        def dfs(s, record):
+            if not s:
+                ret.append(record)
+                return    
+            for i in range(1, len(s)+1):
+                if isPal(s[:i]):
+                    dfs(s[i:], record+[s[:i]])
+
+        def isPal(sub):
+            return sub == sub[::-1]
+        dfs(s, [])
+        return ret
