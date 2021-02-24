@@ -1,0 +1,48 @@
+#339. Nested List Weight Sum
+
+class Solution(object):
+    def depthSum(self, nestedList):
+        """
+        :type nestedList: List[NestedInteger]
+        :rtype: int
+        """
+        self.ret = 0
+        def dfs(nestlist, level):
+            for nest in nestlist:
+                if nest.isInteger():
+                    self.ret+=level*nest.getInteger()
+                else:
+                    dfs(nest.getList(), level+1)
+        
+        dfs(nestedList, 1)
+        return self.ret
+               
+               
+               
+               
+#364. Nested List Weight Sum II               
+class Solution(object):
+    def depthSumInverse(self, nestedList):
+        """
+        :type nestedList: List[NestedInteger]
+        :rtype: int
+        """  
+        self.ret = 0
+        #print(nestedList)
+        def backtrack(nestlist):
+            if len(nestlist) == 0:
+                return 1
+            nextlevel, numer = [], 0
+            for nest in nestlist:
+                if nest.isInteger():
+                    numer+=nest.getInteger()
+                else:
+                    nextlevel+=nest.getList()
+                    
+            level = backtrack(nextlevel)
+            
+            self.ret+=level*numer
+            return level+1
+            
+        backtrack(nestedList)
+        return self.ret
