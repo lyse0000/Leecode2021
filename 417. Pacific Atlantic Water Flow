@@ -1,0 +1,31 @@
+class Solution:
+    def pacificAtlantic(self, matrix: List[List[int]]) -> List[List[int]]:
+        if not matrix:
+            return []
+        
+        visitedA = set()
+        visitedP = set() 
+        
+        col, row = len(matrix), len(matrix[0])
+        direction = [(1,0), (-1,0), (0,1), (0,-1)]
+        
+        def dfs(i, j, visited):
+            if (i, j) in visited:
+                return
+            visited.add((i,j))
+            for dx,dy in direction:
+                nextx = i+dx
+                nexty = j+dy
+                if nextx>=0 and nextx<col and nexty>=0 and nexty<row:
+                    if matrix[i][j]<=matrix[nextx][nexty]:
+                        dfs(nextx,nexty,visited)
+                        
+        for c in range(col):
+            dfs(c,0,visitedP)
+            dfs(c,row-1,visitedA)
+            
+        for r in range(row):
+            dfs(0,r,visitedP)
+            dfs(col-1,r,visitedA)
+            
+        return list(visitedP & visitedA)
