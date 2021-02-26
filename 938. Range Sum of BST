@@ -1,0 +1,25 @@
+class Solution:
+    def rangeSumBST(self, root: TreeNode, low: int, high: int) -> int:
+        if not root: 
+            return 0
+        val = root.val
+        if low<val<high:
+            return root.val+self.rangeSumBST(root.left, low, high)+self.rangeSumBST(root.right,low,high)
+        
+        elif val<high:
+            if low == val:
+                return val+self.rangeSumBST(root.right,low,high)
+            else:
+                return self.rangeSumBST(root.right,low,high)
+        
+        elif val>low:
+            if high == val:
+                return val + self.rangeSumBST(root.left,low,high)
+            else:
+                return self.rangeSumBST(root.left,low,high)
+            
+        elif val == low and val == high:
+            return val
+        
+        else: 
+            return 0
