@@ -1,0 +1,14 @@
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        if len(nums) == 1:
+            return [nums]
+        ret = []
+        
+        for i in set(nums):
+            others = list(nums)
+            others.remove(i)
+            other_permutation = self.permuteUnique(others)
+            for p in other_permutation:
+                ret.append([i]+p)
+        
+        return ret
