@@ -1,0 +1,15 @@
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        def _combine(nums, k):
+            if k<1:
+                return []
+            if k == 1:
+                return [[i] for i in range(nums[0],nums[1])]
+            
+            ret = []
+            for i in range(nums[0],nums[1]):
+                nextcombination = _combine((i+1, nums[1]), k-1)
+                ret+=[ [i]+c for c in nextcombination]
+            return ret
+        
+        return _combine((1,n+1),k)
