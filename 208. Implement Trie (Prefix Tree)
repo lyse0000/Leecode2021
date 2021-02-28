@@ -1,0 +1,49 @@
+class Trie:
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.endMark = '*'
+        self.dict = {}
+        
+    def insert(self, word: str) -> None:
+        """
+        Inserts a word into the trie.
+        """
+        currnode = self.dict
+        for c in word:
+            if c not in currnode:
+                currnode[c] = {}
+            currnode = currnode[c]
+        currnode[self.endMark] = self.endMark
+
+        
+    def search(self, word: str) -> bool:
+        """
+        Returns if the word is in the trie.
+        """
+        currnode = self.dict
+        for c in word:
+            if c in currnode:
+                currnode = currnode[c]
+            else:
+                return False
+        return self.endMark in currnode
+        
+    def startsWith(self, prefix: str) -> bool:
+        """
+        Returns if there is any word in the trie that starts with the given prefix.
+        """
+        currnode = self.dict
+        for c in prefix:
+            if c in currnode:
+                currnode = currnode[c]
+            else:
+                return False
+        return True
+        
+# Your Trie object will be instantiated and called as such:
+# obj = Trie()
+# obj.insert(word)
+# param_2 = obj.search(word)
+# param_3 = obj.startsWith(prefix)
