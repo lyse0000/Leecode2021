@@ -77,6 +77,38 @@ class Solution:
             q = nextq
         return level
         
+   
+
+#=======================================================================================================Another question
+
+# 1254. Number of Closed Islands
+class Solution:
+    def closedIsland(self, grid: List[List[int]]) -> int:
         
+        N, M = len(grid), len(grid[0])
+        if N<2 or M<2: return 0
         
+        def dfs(i, j, val):
+            if 0<=i<N and 0<=j<M and grid[i][j]!=val: 
+                grid[i][j] = val
+                dfs(i+1, j, val)
+                dfs(i-1, j, val)
+                dfs(i, j+1, val)
+                dfs(i, j-1, val)
         
+        # take care of edge            
+        for i in range(N):
+            dfs(i, 0, 1)
+            dfs(i, M-1, 1)
+        for j in range(M):
+            dfs(0, j, 1)
+            dfs(N-1, j, 1)
+        
+        ret = 0
+        for i in range(1, N):
+            for j in range(1, M):
+                if grid[i][j] == 0:
+                    ret +=1
+                    dfs(i, j, 1)
+                
+        return ret
