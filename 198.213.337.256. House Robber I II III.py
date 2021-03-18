@@ -97,3 +97,22 @@ class Solution:
         
         take, skip = helper(root)
         return max(take, skip)
+
+
+
+# ================================================================== Another Q ===========
+# 256. Paint House
+class Solution:
+    def minCost(self, costs: List[List[int]]) -> int:
+        
+        cost1, cost2, cost3 = costs[0][0], costs[0][1], costs[0][2]
+        
+        N = len(costs)
+        
+        for i in range(1,N):
+            c1, c2, c3 = cost1, cost2, cost3
+            cost1 = costs[i][0] + min(c2, c3)
+            cost2 = costs[i][1] + min(c1, c3)
+            cost3 = costs[i][2] + min(c1, c2)
+            
+        return min(cost1, cost2, cost3)
