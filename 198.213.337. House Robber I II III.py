@@ -28,9 +28,7 @@ class Solution:
         return max(skip, take)
 
 
-
-
-
+    
 
 # ================================================================== Another Q ===========
 # 213. House Robber II    
@@ -73,3 +71,29 @@ class Solution:
             take0 = nums[i]+s0
         
         return max(skip0, take0, skip) if N>1 else take    
+
+
+
+
+# ================================================================== Another Q ===========
+# 337. House Robber III
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def rob(self, root: TreeNode) -> int:
+        
+        
+        def helper(node):
+            if not node: return (0,0)
+            
+            takeL, skipL = helper(node.left)
+            takeR, skipR = helper(node.right)
+            
+            return (node.val+skipL+skipR, max(skipL,takeL)+max(skipR,takeR))
+        
+        take, skip = helper(root)
+        return max(take, skip)
