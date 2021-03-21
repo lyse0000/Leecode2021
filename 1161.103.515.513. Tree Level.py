@@ -78,3 +78,26 @@ class Solution:
             ret.append(_max)
             
         return ret
+
+
+
+# =========================================================================================              
+# 513. Find Bottom Left Tree Value
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def findBottomLeftValue(self, root: TreeNode) -> int:
+        queue, ret = [root] if root else [], root
+        while queue:
+            nextqueue = []
+            ret = queue[0].val
+            for n in queue:
+                if n.left: nextqueue.append(n.left)
+                if n.right: nextqueue.append(n.right)
+            queue = nextqueue
+        return ret
