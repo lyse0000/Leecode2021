@@ -53,4 +53,28 @@ class Solution:
             queue = nextqueue
             reverse = not reverse
         return ret
+
+      
+# =========================================================================================              
+# 515. Find Largest Value in Each Tree Row
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def largestValues(self, root: TreeNode) -> List[int]:
+        level, ret = [root] if root else [], []
         
+        while level:
+            nextlevel, _max = [], float('-inf')
+            for n in level:
+                if n.left: nextlevel.append(n.left)
+                if n.right: nextlevel.append(n.right)
+                _max = max(n.val, _max)
+            level = nextlevel
+            ret.append(_max)
+            
+        return ret
