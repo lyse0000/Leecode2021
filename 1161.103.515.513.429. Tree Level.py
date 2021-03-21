@@ -101,3 +101,30 @@ class Solution:
                 if n.right: nextqueue.append(n.right)
             queue = nextqueue
         return ret
+
+
+# =========================================================================================    
+# 429. N-ary Tree Level Order Traversal
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val=None, children=None):
+        self.val = val
+        self.children = children
+"""
+
+class Solution:
+    def levelOrder(self, root: 'Node') -> List[List[int]]:
+        ret, q = [], [root] if root else []
+        
+        while q:
+            nextq = []
+            for n in q:
+                for c in n.children:
+                    nextq.append(c)
+            ret.append([n.val for n in q])
+            q = nextq
+            
+        return ret
+        
