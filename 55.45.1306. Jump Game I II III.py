@@ -23,7 +23,7 @@ class Solution:
 
 
 # ========================================================================================
-#45. Jump Game II
+# 45. Jump Game II
 class Solution:
     def jump(self, nums: List[int]) -> int:
         """
@@ -47,3 +47,21 @@ class Solution:
             step+=1
                 
         return N if N>2 else 0
+
+
+
+# ========================================================================================
+# 1306. Jump Game III
+class Solution:
+    def canReach(self, arr: List[int], start: int) -> bool:
+        
+        visited, N = set(), len(arr)
+        
+        def dfs(i):
+            if 0<=i<N and not i in visited:
+                if arr[i] == 0:  return True
+                visited.add(i)
+                return dfs(i-arr[i]) or dfs(i+arr[i])
+            return False
+        
+        return dfs(start)
