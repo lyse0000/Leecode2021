@@ -29,6 +29,52 @@ class Solution:
 
 
 # =====================================================================================================
+# 980. Unique Paths III
+class Solution:
+    def uniquePathsIII(self, grid: List[List[int]]) -> int:
+        """
+        
+            0   0   1   0   0   0       |  <-   1    ^   -> ->        
+            0  -1   0   0   0   0       |  #    ^   ->   <-  |         
+            0   0   0  -1   0   0       -> ->  ->    #   |   2    
+           
+           
+           
+           Why?
+           grid[i][j] = -2
+                dfs.....
+           grid[i][j] = 0 
+        """
+        
+        
+        start, zeros = (0, 0), 0
+        M, N = len(grid), len(grid[0])
+        
+        for i in range(M):
+            for j in range(N):
+                if grid[i][j] == 1:
+                    start = (i, j)
+                elif grid[i][j] == 0:
+                    zeros+=1
+                    
+        def dfs(i, j, steps):
+            if 0<=i<M and 0<=j<N:
+                if grid[i][j] == 2 and steps == zeros:
+                    self.ret+=1
+                    return
+                elif 0 <= grid[i][j] <2:
+                    grid[i][j] = -2
+                    dfs(i+1, j, steps+1)
+                    dfs(i-1, j, steps+1)
+                    dfs(i, j+1, steps+1)
+                    dfs(i, j-1, steps+1)
+                    grid[i][j] = 0
+        
+        self.ret = 0
+        dfs(start[0], start[1], -1)
+        return self.ret
+
+# =====================================================================================================
 # 64. Minimum Path Sum
 class Solution:
     def minPathSum(self, grid: List[List[int]]) -> int:
