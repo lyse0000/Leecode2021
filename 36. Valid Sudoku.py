@@ -35,3 +35,53 @@ class Solution:
                 seen.add(square)
                 
         return True
+    
+    
+    
+# =====================================================================================================    
+# 37. Sudoku Solver    
+class Solution:
+    def solveSudoku(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+                
+        """
+            0 1 2  3 4 5  6 7 8     
+            1                       
+            2    
+            ...
+            6                      
+            7                     range = row//3*3 - row//3*3+3
+            8
+        
+        """
+        self.board = board
+        self.solve()
+        
+        
+    def findEmpty(self):
+        for i in range(9):
+            for j in range(9):
+                if self.board[i][j] == ".":
+                    return (i, j)
+        return (-1, -1)
+    
+    
+    def solve(self):
+        c, r = self.findEmpty()
+        if c<0: return True
+        
+        for num in ["1","2","3","4","5","6","7","8","9"]:
+            if self.noConflict(c, r, num):
+                self.board[c][r] = num
+                if self.solve(): return True
+                self.board[c][r] = '.'
+        
+    
+    def noConflict(self, col, row, num):
+        row_ok = all(self.board[col][r_i] != num for r_i in range(9))
+        col_ok = all(self.board[c_i][row] != num for c_i in range(9))
+        square_ok = all(self.board[c_i][r_i] != num for r_i in range(row//3*3, row//3*3+3) for c_i in range(col//3*3, col//3*3+3))
+        
+        return row_ok and col_ok and square_ok
