@@ -47,7 +47,6 @@ class Solution:
             
         return max(dp)
 
-
 # =======================================================================================================        
 # 309. Best Time to Buy and Sell Stock with Cooldown
 class Solution:
