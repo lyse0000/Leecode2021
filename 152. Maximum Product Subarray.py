@@ -1,4 +1,16 @@
+# 53. Maximum Subarray
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        _maxsum = nums[0]
+        ret = nums[0]
+        
+        for i in range(1, len(nums)):
+            _maxsum = max(_maxsum+nums[i], nums[i])
+            ret = max(ret, _maxsum)
+            
+        return ret
 
+# ========================================================================================================
 # 152. Maximum Product Subarray
 class Solution:
     def maxProduct(self, nums: List[int]) -> int:
