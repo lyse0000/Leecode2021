@@ -21,3 +21,28 @@ class Solution:
                     dp[ki][i] = max(dp[ki][i], value)
             
         return dp[K-1][N-1]
+
+# ========================================================================================================
+# 1335. Minimum Difficulty of a Job Schedule
+class Solution:
+    def minDifficulty(self, jobDifficulty: List[int], d: int) -> int:
+        N, job = len(jobDifficulty), jobDifficulty
+        
+        dp = [[float('inf')]*N for _ in range(d)]
+        
+        if d > N: return -1
+        if d >= N: return sum(job)
+        
+        for i in range(N):
+            dp[0][i] = max(job[:i+1])
+        
+        
+        for di in range(1, d):
+            for i in range(di, N):
+                for j in range(di-1, i):
+                    value = dp[di-1][j] + max(job[j+1:i+1])
+                    dp[di][i] = min(dp[di][i], value)
+                    
+        return dp[d-1][N-1]
+                
+                
