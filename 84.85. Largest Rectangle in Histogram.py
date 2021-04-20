@@ -36,3 +36,32 @@ def largestRectangleArea(self, height):
         stack.append(i)
     height.pop()
     return ans
+
+
+# ==========================================================================================
+# 85. Maximal Rectangle
+
+class Solution:
+    def maximalRectangle(self, matrix: List[List[str]]) -> int:
+        if len(matrix) == 0:
+            return 0
+        M, N = len(matrix), len(matrix[0])
+        
+        for i in range(N):
+            matrix[0][i] = 1 if matrix[0][i]=="1" else 0
+        for i in range(1, M):
+            for j in range(N):
+                matrix[i][j] = matrix[i-1][j] + 1 if matrix[i][j] == "1" else 0
+                    
+        ret = 0
+        for i in range(M):
+            stack = [-1]
+            his = matrix[i]+[0] 
+            for j in range(N+1):
+                while his[j] < his[stack[-1]]:
+                    h = his[stack.pop()]
+                    w = j - stack[-1] - 1
+                    ret = max(ret, h*w)
+                stack.append(j)
+        return ret
+        
